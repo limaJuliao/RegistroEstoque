@@ -3,6 +3,7 @@ package br.com.ftt.lpII.RegistroEstoque.Aplicacao;
 import java.util.Scanner;
 
 import br.com.ftt.lpII.RegistroEstoque.DAO.PedidoCompraDAO;
+import br.com.ftt.lpII.RegistroEstoque.Negocio.PedidoDeCompra;
 
 public class Aplicacao {
 
@@ -29,8 +30,8 @@ public class Aplicacao {
 					
 					break;
 					
-				case 2:					
-					pedidoCompraDAO.Listagem();
+				case 2:
+					System.out.println(pedidoCompraDAO.select());
 					
 					break;
 

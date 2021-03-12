@@ -14,6 +14,11 @@ public class PedidoCompraDAO {
 //	private PedidoDeCompra pedidoCompra;
 	private LinkedList<PedidoDeCompra> pedidoDeCompraLista;
 	
+	public String select() throws Exception {
+		montaPedidoDeCompraLista();
+		return Listagem();
+	}
+	
 	public void create() throws Exception {
 		PedidoDeCompra pedidoDeCompra = new PedidoDeCompra();
 		montaPedidoDeCompra(pedidoDeCompra);
@@ -84,9 +89,7 @@ public class PedidoCompraDAO {
 		
 		helperTxt.SaveFile(Listagem(), "PedidoCompra.csv");
 	}
-	
-	
-	
+		
 	public String Listagem() throws Exception {
 		String cabecalho = String.format("%s | %s | %s | %s | %s | %s | %s %n",
 				"Numero Pedido",
