@@ -1,7 +1,7 @@
 package br.com.ftt.lpII.RegistroEstoque.Negocio;
 
 
-public class PedidoDeCompra implements Comparable<PedidoDeCompra> {
+public class PedidoDeCompra {
 	private int id;
 	private String dataEntrada;
 	private String localCompra;
@@ -10,7 +10,7 @@ public class PedidoDeCompra implements Comparable<PedidoDeCompra> {
 	private int quantidade;
 	private double valorMargemCem;
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 	public void setId(int id) {
@@ -63,10 +63,6 @@ public class PedidoDeCompra implements Comparable<PedidoDeCompra> {
 				this.getValorEtiquetaCompra(),
 				this.getQuantidade(),
 				this.getValorMargemCem());
-	}
-	@Override
-	public int compareTo(PedidoDeCompra o) {
-		return Integer.compare(this.getId(), o.getId());
 	}
 	
 }

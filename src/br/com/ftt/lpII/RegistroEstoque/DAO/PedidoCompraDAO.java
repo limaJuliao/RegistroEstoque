@@ -1,7 +1,9 @@
 package br.com.ftt.lpII.RegistroEstoque.DAO;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.awt.List;
+import java.io.File;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -9,6 +11,7 @@ import br.com.ftt.lpII.RegistroEstoque.Negocio.PedidoDeCompra;
 
 
 public class PedidoCompraDAO {
+//	private PedidoDeCompra pedidoCompra;
 	private LinkedList<PedidoDeCompra> pedidoDeCompraLista;
 	
 	public String select() throws Exception {
@@ -43,9 +46,7 @@ public class PedidoCompraDAO {
 		
 		System.out.print("Informe a quantidade comprada: ");
 		int quantidade = scanner.nextInt();
-		pedidoDeCompra.setQuantidade(quantidade);
-		
-		scanner.close();
+		pedidoDeCompra.setQuantidade(quantidade);		
 	}
 	
 	private void montaPedidoDeCompraLista() throws Exception {
@@ -81,8 +82,6 @@ public class PedidoCompraDAO {
 	
 	public void save(PedidoDeCompra pedidoCompra) throws Exception {
 		montaPedidoDeCompraLista();
-		
-		Collections.sort(this.pedidoDeCompraLista);
 		
 		this.pedidoDeCompraLista.add(pedidoCompra);
 		
