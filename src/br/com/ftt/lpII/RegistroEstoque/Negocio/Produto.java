@@ -1,7 +1,5 @@
 package br.com.ftt.lpII.RegistroEstoque.Negocio;
 
-import java.util.Date;
-
 public class Produto {
 	private int codigoItem;
 	private String nome;

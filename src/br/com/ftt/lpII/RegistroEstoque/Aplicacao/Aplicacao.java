@@ -3,7 +3,6 @@ package br.com.ftt.lpII.RegistroEstoque.Aplicacao;
 import java.util.Scanner;
 
 import br.com.ftt.lpII.RegistroEstoque.DAO.PedidoCompraDAO;
-import br.com.ftt.lpII.RegistroEstoque.Negocio.PedidoDeCompra;
 
 public class Aplicacao {
 
