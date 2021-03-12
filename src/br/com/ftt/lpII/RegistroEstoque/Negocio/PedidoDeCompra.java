@@ -1,27 +1,25 @@
 package br.com.ftt.lpII.RegistroEstoque.Negocio;
 
-import java.util.Date;
-import java.util.LinkedList;
 
-public class PedidoCompra {
+public class PedidoDeCompra {
 	private int id;
-	private Date dataEntrada;
+	private String dataEntrada;
 	private String localCompra;
 	private double valorPagoNaCompra;
 	private double valorEtiquetaCompra;
 	private int quantidade;
 	private double valorMargemCem;
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Date getDataEntrada() {
+	public String getDataEntrada() {
 		return dataEntrada;
 	}
-	public void setDataEntrada(Date dataEntrada) {
+	public void setDataEntrada(String dataEntrada) {
 		this.dataEntrada = dataEntrada;
 	}
 	public String getLocalCompra() {
@@ -52,8 +50,19 @@ public class PedidoCompra {
 		return valorMargemCem;
 	}
 	public void setValorMargemCem(double valorMargemCem) {
-		this.valorMargemCem = valorMargemCem;
+		this.valorMargemCem = getValorPagoNaCompra() * 2;
 	}
 	
+	@Override
+	public String toString() {
+		return String.format("%013d | %12s | %12s | %17.2f | %21.5f | %10d | %17.2f %n",
+				this.getId(), 
+				this.getLocalCompra(),
+				this.getDataEntrada(),
+				this.getValorPagoNaCompra(),
+				this.getValorEtiquetaCompra(),
+				this.getQuantidade(),
+				this.getValorMargemCem());
+	}
 	
 }

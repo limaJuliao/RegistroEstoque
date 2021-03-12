@@ -3,7 +3,6 @@ package br.com.ftt.lpII.RegistroEstoque.Aplicacao;
 import java.util.Scanner;
 
 import br.com.ftt.lpII.RegistroEstoque.DAO.PedidoCompraDAO;
-import br.com.ftt.lpII.RegistroEstoque.Negocio.PedidoCompra;
 
 public class Aplicacao {
 
@@ -26,13 +25,11 @@ public class Aplicacao {
 				
 				switch (opcao) {
 				case 1:
-					PedidoCompra pedidoCompra = new PedidoCompra();
-					pedidoCompraDAO.Cadastrar(pedidoCompra);
+					pedidoCompraDAO.create();					
 					
 					break;
 					
-				case 2:
-					
+				case 2:					
 					pedidoCompraDAO.Listagem();
 					
 					break;

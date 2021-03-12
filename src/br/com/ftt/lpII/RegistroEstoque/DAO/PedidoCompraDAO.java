@@ -1,79 +1,108 @@
 package br.com.ftt.lpII.RegistroEstoque.DAO;
 
+import java.awt.List;
 import java.io.File;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-import br.com.ftt.lpII.RegistroEstoque.Negocio.PedidoCompra;
+import br.com.ftt.lpII.RegistroEstoque.Negocio.PedidoDeCompra;
+
 
 public class PedidoCompraDAO {
+//	private PedidoDeCompra pedidoCompra;
+	private LinkedList<PedidoDeCompra> pedidoDeCompraLista;
 	
-	public void Cadastrar(PedidoCompra pedidoCompra) throws Exception {
-		int ultimoId = this.Carrega().getLast().getId();
-		System.out.println(ultimoId);
-		
-		pedidoCompra.setId(ultimoId++);
-		pedidoCompra.setDataEntrada("");
+	public void create() throws Exception {
+		PedidoDeCompra pedidoDeCompra = new PedidoDeCompra();
+		montaPedidoDeCompra(pedidoDeCompra);
+		save(pedidoDeCompra);
 	}
 	
-	public LinkedList<PedidoCompra> Carrega() throws Exception {
-		// Instancia objeto de leitura do arquivo
-		Scanner scanner = new Scanner(new File("PedidoCompra.csv"));
+	private void montaPedidoDeCompra(PedidoDeCompra pedidoDeCompra) {
+		Scanner scanner = new Scanner(System.in);
 		
-		// Instancia lista para armazenar pedidos lidos no arquivo
-		LinkedList<PedidoCompra> colecao = new LinkedList<PedidoCompra>();		
+		System.out.print("Informe a data de entrada do pedido: ");
+		String dataEntrada = scanner.nextLine();
+		pedidoDeCompra.setDataEntrada(dataEntrada);
 		
-		while (scanner.hasNextLine()) {
-			// fraciona objeto de leitura em linhas
-			String linha = scanner.nextLine();
-			
-			// instancia novo objeto de leitura agora da linha fracionada
-			// necessário para adiocionar delimitador (;)
-			Scanner linhaScanner = new Scanner(linha);
-			
-			// Adiciona o delimitados de dados
-			linhaScanner.useDelimiter(";");
-			
-			// Acrescenta pedido de compra na lista
-			colecao.add(compoe(linhaScanner));
-		}		
-		return colecao;
+		System.out.print("Informe o Local da compra: ");
+		String localCompra = scanner.nextLine();
+		pedidoDeCompra.setLocalCompra(localCompra);
+		
+		System.out.print("Informe o valor pago na compra: ");
+		double valorPagoNaCompra = scanner.nextDouble();
+		pedidoDeCompra.setValorPagoNaCompra(valorPagoNaCompra);
+		
+		System.out.print("Informe o valor Etiqueta na compra: ");
+		double valorEtiquetaCompra = scanner.nextDouble();
+		pedidoDeCompra.setValorEtiquetaCompra(valorEtiquetaCompra);
+		
+		System.out.print("Informe a quantidade comprada: ");
+		int quantidade = scanner.nextInt();
+		pedidoDeCompra.setQuantidade(quantidade);		
 	}
 	
-	private PedidoCompra compoe(Scanner linhaScanner) {		
-		// Instancia novo objeto
-		PedidoCompra pedidoCompra = new PedidoCompra();
+	private void montaPedidoDeCompraLista() throws Exception {
+		this.pedidoDeCompraLista = new LinkedList<PedidoDeCompra>();
+		
+		HelperTxt helperTxt = new HelperTxt("PedidoCompra.csv");
+		
+		Scanner scanner = helperTxt.LoadFile();
 
-		// Conpoe Objeto
-		pedidoCompra.setId(linhaScanner.nextInt());
-//		pedidoCompra.dataEntrada(linhaScanner.next());
-		pedidoCompra.setLocalCompra(linhaScanner.next());
-		pedidoCompra.setValorPagoNaCompra(linhaScanner.nextInt());
-		pedidoCompra.setValorEtiquetaCompra(linhaScanner.nextDouble());
-		pedidoCompra.setQuantidade(linhaScanner.nextInt());
-		pedidoCompra.setValorMargemCem(linhaScanner.nextInt());		
+		if (scanner.hasNextLine()) {			
+			//retira cabeçalho
+			scanner.nextLine();
+			
+			while (scanner.hasNextLine()) {
+				String linha = scanner.nextLine();
+				String[] values = linha.split("|");
+
+				PedidoDeCompra pedidoDeCompra = new PedidoDeCompra();				
+				pedidoDeCompra.setId(Integer.parseInt(values[0]));
+				pedidoDeCompra.setDataEntrada(values[1]);
+				pedidoDeCompra.setLocalCompra(values[2]);
+				pedidoDeCompra.setValorPagoNaCompra(Double.parseDouble(values[3]));
+				pedidoDeCompra.setValorEtiquetaCompra(Double.parseDouble(values[4]));
+				pedidoDeCompra.setQuantidade(Integer.parseInt(values[5]));
+				pedidoDeCompra.setValorMargemCem(Double.parseDouble(values[6]));
+
+				this.pedidoDeCompraLista.add(pedidoDeCompra);				
+			}
+		} 
 		
-		return pedidoCompra;
+		scanner.close();
 	}
 	
-	public void Listagem() throws Exception {
-		System.out.println("Pedidos de Compras: ");
-		System.out.format("%s | %s | %s | %s | %s | %s %n",
+	public void save(PedidoDeCompra pedidoCompra) throws Exception {
+		montaPedidoDeCompraLista();
+		
+		this.pedidoDeCompraLista.add(pedidoCompra);
+		
+		HelperTxt helperTxt = new HelperTxt("PedidoCompra.csv");
+		
+		helperTxt.SaveFile(Listagem(), "PedidoCompra.csv");
+	}
+	
+	
+	
+	public String Listagem() throws Exception {
+		String cabecalho = String.format("%s | %s | %s | %s | %s | %s | %s %n",
 				"Numero Pedido",
 				"Local Compra", 
+				"Data Entrada",
 				"Valor Pago compra", 
 				"Valor Etiqueta Compra",
 				"Quantidade", 
 				"Valor Margem 100%" );
 		
-		for (PedidoCompra pedidoCompra : this.Carrega()) {
-			System.out.format("%013d | %12s | %17.2f | %21.5f | %10d | %17.2f %n%n",
-					pedidoCompra.getId(), 
-					pedidoCompra.getLocalCompra(),
-					pedidoCompra.getValorPagoNaCompra(),
-					pedidoCompra.getValorEtiquetaCompra(),
-					pedidoCompra.getQuantidade(),
-					pedidoCompra.getValorMargemCem());
+		String dados = "";
+		
+		for (PedidoDeCompra pedidoDeCompra : this.pedidoDeCompraLista) {
+			dados += pedidoDeCompra.toString();
 		}
+		
+		return cabecalho + dados;
 	}
 }
