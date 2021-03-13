@@ -10,7 +10,7 @@ public class PedidoDeCompra {
 	private int quantidade;
 	private double valorMargemCem;
 	
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
@@ -55,8 +55,8 @@ public class PedidoDeCompra {
 	
 	@Override
 	public String toString() {
-		return String.format("%013d | %12s | %12s | %17.2f | %21.5f | %10d | %17.2f %n",
-				this.getId(), 
+		return String.format("%013d;%12s;%12s;%017.2f;%021.2f;%010d;%017.2f; %n",
+				this.getId(),
 				this.getLocalCompra(),
 				this.getDataEntrada(),
 				this.getValorPagoNaCompra(),

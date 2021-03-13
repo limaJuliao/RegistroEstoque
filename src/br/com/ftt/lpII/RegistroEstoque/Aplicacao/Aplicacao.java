@@ -3,7 +3,6 @@ package br.com.ftt.lpII.RegistroEstoque.Aplicacao;
 import java.util.Scanner;
 
 import br.com.ftt.lpII.RegistroEstoque.DAO.PedidoCompraDAO;
-import br.com.ftt.lpII.RegistroEstoque.Negocio.PedidoDeCompra;
 
 public class Aplicacao {
 
@@ -18,6 +17,7 @@ public class Aplicacao {
 				System.out.println("Informe a opção desejada.");
 				System.out.println("1 - Cadastrar Pedido de Compra");
 				System.out.println("2 - Listar Pedidos de Compra");
+				System.out.println("9 - Sair");
 
 				PedidoCompraDAO pedidoCompraDAO = new PedidoCompraDAO();
 				
@@ -32,6 +32,11 @@ public class Aplicacao {
 					
 				case 2:
 					System.out.println(pedidoCompraDAO.select());
+					
+					break;
+					
+				case 9:
+					System.out.println("Saindo da aplicação.");
 					
 					break;
 

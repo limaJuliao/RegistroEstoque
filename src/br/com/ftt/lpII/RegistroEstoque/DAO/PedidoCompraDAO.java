@@ -1,9 +1,5 @@
 package br.com.ftt.lpII.RegistroEstoque.DAO;
 
-import java.awt.List;
-import java.io.File;
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -11,7 +7,6 @@ import br.com.ftt.lpII.RegistroEstoque.Negocio.PedidoDeCompra;
 
 
 public class PedidoCompraDAO {
-//	private PedidoDeCompra pedidoCompra;
 	private LinkedList<PedidoDeCompra> pedidoDeCompraLista;
 	
 	public String select() throws Exception {
@@ -61,17 +56,17 @@ public class PedidoCompraDAO {
 			scanner.nextLine();
 			
 			while (scanner.hasNextLine()) {
-				String linha = scanner.nextLine();
-				String[] values = linha.split("|");
+				Scanner linha = new Scanner(scanner.nextLine());
+				linha.useDelimiter(";");
 
 				PedidoDeCompra pedidoDeCompra = new PedidoDeCompra();				
-				pedidoDeCompra.setId(Integer.parseInt(values[0]));
-				pedidoDeCompra.setDataEntrada(values[1]);
-				pedidoDeCompra.setLocalCompra(values[2]);
-				pedidoDeCompra.setValorPagoNaCompra(Double.parseDouble(values[3]));
-				pedidoDeCompra.setValorEtiquetaCompra(Double.parseDouble(values[4]));
-				pedidoDeCompra.setQuantidade(Integer.parseInt(values[5]));
-				pedidoDeCompra.setValorMargemCem(Double.parseDouble(values[6]));
+				pedidoDeCompra.setId(linha.nextInt());
+				pedidoDeCompra.setDataEntrada(linha.next());
+				pedidoDeCompra.setLocalCompra(linha.next());
+				pedidoDeCompra.setValorPagoNaCompra(linha.nextDouble());
+				pedidoDeCompra.setValorEtiquetaCompra(linha.nextDouble());
+				pedidoDeCompra.setQuantidade(linha.nextInt());
+				pedidoDeCompra.setValorMargemCem(linha.nextDouble());
 
 				this.pedidoDeCompraLista.add(pedidoDeCompra);				
 			}
@@ -91,7 +86,7 @@ public class PedidoCompraDAO {
 	}
 		
 	public String Listagem() throws Exception {
-		String cabecalho = String.format("%s | %s | %s | %s | %s | %s | %s %n",
+		String cabecalho = String.format("%s;%s;%s;%s;%s;%s;%s %n",
 				"Numero Pedido",
 				"Local Compra", 
 				"Data Entrada",
